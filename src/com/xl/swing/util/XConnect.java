@@ -522,6 +522,7 @@ public class XConnect extends SwingWorker<String, Void> {
         public void onPostGetText(String text);
     }
 
+//    线程运行
 	@Override
 	protected String doInBackground() throws Exception {
 		// TODO Auto-generated method stub
@@ -549,12 +550,14 @@ public class XConnect extends SwingWorker<String, Void> {
 	}
 
 
+//	连接完成
 	@Override
 	protected void done() {
 		// TODO Auto-generated method stub
 		super.done();
 		if(listener!=null){
 			try {
+//				get获取doBackground的数据
 				listener.onPostGetText(get());
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
