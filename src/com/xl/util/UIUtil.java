@@ -1,4 +1,4 @@
-package com.xl.swing.util;
+package com.xl.util;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
