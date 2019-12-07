@@ -14,6 +14,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -57,6 +58,7 @@ public class XConnect extends Thread {
 	private HashMap<String,String> getMap;
 	private HashMap<String,String> headMap;
 	private boolean isJsonPost;
+	private boolean isData;
     Handler handler;
     static String TAG = "XConnect";
     private int min_time=200;
@@ -247,10 +249,16 @@ public class XConnect extends Thread {
         return re;
         }
         else{
+        	if(isData){
+        		JSONObject jsonData = new JSONObject();
+        		jsonData.put("Data", jsonObject);
+        		return jsonData.toString();
+        	}
+        	else
         	return jsonObject.toString();
         }
         
-    }
+    }	
 
 
 
@@ -447,6 +455,15 @@ public class XConnect extends Thread {
 
             // 读取返回数据  
             StringBuffer strBuf = new StringBuffer();  
+            InputStream inputStream = null;
+            
+//            System.out.println("result code = "+conn.getResponseCode());
+//            if(conn.getResponseCode()>=400){
+//            	inputStream = conn.getInputStream();
+//            }
+//            else{
+//            	inputStream = conn.getErrorStream();
+//            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
             String line = null;
             int cc = 0;
@@ -472,7 +489,7 @@ public class XConnect extends Thread {
             }  
         }  
 System.out.println("res = "+res);
-        return res;  
+        return res;  	
     }  
 
     /*
@@ -483,9 +500,10 @@ System.out.println("res = "+res);
         public void onPostGetText(String text);
     }
 
-	public void setJSONPost(boolean selected) {
+	public void setJSONPost(boolean selected,boolean isData) {
 		// TODO Auto-generated method stub
 		this.isJsonPost = selected;
+		this.isData = isData;
 	}
 
 

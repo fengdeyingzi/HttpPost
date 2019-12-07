@@ -47,6 +47,7 @@ public class PostWindow extends JFrame{
 	private JTextField edit_urlField;
 	private JButton btn_go; 
 	private JCheckBox checkBox_isJson;
+	private JCheckBox checkBox_isData;
 	
 	public PostWindow(){
 		data_head = new Vector<String>();
@@ -56,7 +57,7 @@ public class PostWindow extends JFrame{
 		Box box_v= Box.createVerticalBox();
 		JPanel layout_mainJPanel= new JPanel();
 		setTitle("post测试-v1.1 - 风的影子 制作");
-		setSize(640, 480);
+		setSize(640, 520);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(layout_mainJPanel);
 		layout_mainJPanel.add(box_v);
@@ -111,6 +112,8 @@ public class PostWindow extends JFrame{
 		
 		checkBox_isJson = new JCheckBox("json类型数据");
 		
+		checkBox_isData = new JCheckBox("Data封装");
+		
 		
 		 btn_addhead= new JButton("添加head");
 		 btn_getButton= new JButton("添加get参数");
@@ -124,9 +127,14 @@ public class PostWindow extends JFrame{
 		box_v.add(list_head);
 		box_v.add(list_get);
 		box_v.add(list_post);
+		Box box_check = Box.createHorizontalBox();
+		box_check.add(checkBox_isJson);
+		box_check.add(checkBox_isData);
+		
 		Box box_buttonBox= Box.createHorizontalBox();
+		box_v.add(box_check);
 		box_v.add(box_buttonBox);
-		box_buttonBox.add(checkBox_isJson);
+		
 		box_buttonBox.add(btn_addText);
 		box_buttonBox.add(btn_output);
 		box_buttonBox.add(btn_addhead);
@@ -228,7 +236,7 @@ public class PostWindow extends JFrame{
 					String items[]= data_post.get(i).split(":");
 					connect.addPostParmeter(items[0], items[1]);
 				}
-				connect.setJSONPost(checkBox_isJson.isSelected());
+				connect.setJSONPost(checkBox_isJson.isSelected(),checkBox_isData.isSelected());
 				connect.start();
 			}
 		});
