@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.xl.tool.OConnect;
 import com.xl.tool.XConnect;
 import com.xl.util.ClipBoard;
 import com.xl.util.JsonFormat;
@@ -214,7 +215,11 @@ public class PostWindow extends JFrame{
 			
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				XConnect connect= new XConnect(edit_urlField.getText(), new XConnect.PostGetInfoListener() {
+				String url = edit_urlField.getText();
+				if(url.indexOf("://") <0){
+					url = "http://"+url;
+				}
+				OConnect connect= new OConnect(url, new OConnect.PostGetInfoListener() {
 					
 					public void onPostGetText(String text) {
 						// TODO Auto-generated method stub
