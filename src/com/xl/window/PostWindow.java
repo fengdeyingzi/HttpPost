@@ -7,6 +7,7 @@ import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -267,35 +268,49 @@ public class PostWindow extends JFrame{
 						data_post.clear();
 						data_head.clear();
 						edit_urlField.setText(url);
-						checkBox_isJson.setSelected(jsonObject.getBoolean("is_json"));
-						JSONArray array_head = jsonObject.getJSONArray("head");
-						JSONArray array_get = jsonObject.getJSONArray("get");
-						JSONArray array_post = jsonObject.getJSONArray("post");
-						for(int i=0;i<array_head.length();i++){
-							JSONObject obj = array_head.getJSONObject(i);
-							String key = obj.getString("key");
-							String value = obj.getString("value");
-							data_head.add(key+":"+value);
-						}
-						
-						for(int i=0;i<array_get.length();i++){
-							JSONObject obj = array_get.getJSONObject(i);
-							String key = obj.getString("key");
-							String value = obj.getString("value");
-							data_get.add(key+":"+value);
-						}
-						
-						for(int i=0;i<array_post.length();i++){
-							JSONObject obj = array_post.getJSONObject(i);
-							String key = obj.getString("key");
-							String value = obj.getString("value");
-							data_post.add(key+":"+value);
-						}
+						checkBox_isJson.setSelected(jsonObject.optBoolean("is_json"));
+						checkBox_isData.setSelected(jsonObject.optBoolean("is_data"));
+						JSONObject array_head = jsonObject.getJSONObject("head");
+						JSONObject array_get = jsonObject.getJSONObject("get");
+						JSONObject array_post = jsonObject.getJSONObject("post");
+						Iterator<String> iter_head = array_head.keys();
+						while (iter_head.hasNext()){
+                            String key = iter_head.next();
+                            data_head.add(key+":"+array_head.getString(key));
+                        }
+//						for(int i=0;i<array_head.length();i++){
+//							JSONObject obj = array_head.getJSONObject(i);
+//							String key = obj.getString("key");
+//							String value = obj.getString("value");
+//							data_head.add(key+":"+value);
+//						}
+						Iterator<String> iter_get = array_get.keys();
+						while (iter_get.hasNext()){
+                            String key = iter_get.next();
+                            data_get.add(key+":"+array_get.getString(key));
+                        }
+//						for(int i=0;i<array_get.length();i++){
+////							JSONObject obj = array_get.getJSONObject(i);
+//							String key = obj.getString("key");
+//							String value = obj.getString("value");
+//							data_get.add(key+":"+value);
+//						}
+						Iterator<String> iter_post = array_post.keys();
+						while (iter_post.hasNext()){
+                            String key = iter_post.next();
+                            data_post.add(key+":"+array_post.getString(key));
+                        }
+//						for(int i=0;i<array_post.length();i++){
+////							JSONObject obj = array_post.getJSONObject(i);
+//							String key = obj.getString("key");
+//							String value = obj.getString("value");
+//							data_post.add(key+":"+value);
+//						}
 						refreshList();
 						window.dispose();
 						}
 						catch(JSONException e1){
-							System.err.println(e1);
+							e1.printStackTrace();
 							window.dispose();
 						}
 						
@@ -316,30 +331,29 @@ public class PostWindow extends JFrame{
 				String url = edit_urlField.getText();
 				jsonObject.put("url", url);
 				jsonObject.put("is_json", checkBox_isJson.isSelected());
-				JSONArray array_head = new JSONArray();
-				JSONArray array_get = new JSONArray();
-				JSONArray array_post = new JSONArray();
+				jsonObject.put("is_data", checkBox_isData.isSelected());
+				JSONObject array_head = new JSONObject();
+				JSONObject array_get = new JSONObject();
+				JSONObject array_post = new JSONObject();
 				
 				for(int i=0;i<data_head.size();i++){
 					String items[]= data_head.get(i).split(":");
-					JSONObject obj = new JSONObject();
-					obj.put("key", items[0]);
-					obj.put("value", items[1]);
-					array_head.put(obj);
+//					JSONObject obj = new JSONObject();
+					array_head.put(items[0],items[1]);
+//					array_head.put(obj);
 				}
 				for(int i=0;i<data_get.size();i++){
 					String items[]= data_get.get(i).split(":");
-					JSONObject obj = new JSONObject();
-					obj.put("key", items[0]);
-					obj.put("value", items[1]);
-					array_get.put(obj);
+//					JSONObject obj = new JSONObject();
+					array_get.put( items[0],items[1]);
+//					array_get.put(obj);
 				}
 				for(int i=0;i<data_post.size();i++){
 					String items[]= data_post.get(i).split(":");
-					JSONObject obj = new JSONObject();
-					obj.put("key", items[0]);
-					obj.put("value", items[1]);
-					array_post.put(obj);
+//					JSONObject obj = new JSONObject();
+					array_post.put(items[0],items[1]);
+
+//					array_post.put(obj);
 				}
 				jsonObject.put("head", array_head);
 				jsonObject.put("get", array_get);
