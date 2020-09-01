@@ -58,7 +58,7 @@ public class PostWindow extends JFrame{
 		data_head.add("name:fengdeyingzi");
 		Box box_v= Box.createVerticalBox();
 		JPanel layout_mainJPanel= new JPanel();
-		setTitle("post测试-v1.1 - 风的影子 制作");
+		setTitle("HttpPost测试-v1.2 - 风的影子 制作");
 		setSize(640, 520);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(layout_mainJPanel);
@@ -155,7 +155,9 @@ public class PostWindow extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						String textString= dialogAddParseWindow.getValue();
-						data_head.add(textString);
+//						data_head.add(textString);
+						addItem(data_head, textString);
+						list_head.removeAll();
 						list_head.setListData(data_head);
 					}
 				});
@@ -175,7 +177,8 @@ public class PostWindow extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						String textString= dialogAddParseWindow.getValue();
-						data_get.add(textString);
+//						data_get.add(textString);
+						addItem(data_get, textString);
 						refreshList();
 					}
 				});
@@ -195,7 +198,8 @@ public class PostWindow extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						String textString= dialogAddParseWindow.getValue();
-						data_post.add(textString);
+//						data_post.add(textString);
+						addItem(data_post, textString);
 						refreshList();
 					}
 				});
@@ -373,9 +377,23 @@ public class PostWindow extends JFrame{
 	
 	
 	private void refreshList(){
+		list_get.removeAll();
+		list_head.removeAll();
+		list_post.removeAll();
 		list_get.setListData(data_get);
 				list_head.setListData(data_head);
 				list_post.setListData(data_post);
+	}
+	
+	private void addItem(Vector<String> list_item, String item) {
+		
+		for(int i=0;i<list_item.size();i++){
+			String temp = list_item.get(i);
+			if(temp.startsWith(item+":")){
+				list_item.remove(i);
+			}
+		}
+		list_item.add(item);
 	}
 	
 	
