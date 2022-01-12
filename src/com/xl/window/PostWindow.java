@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -50,6 +53,8 @@ public class PostWindow extends JFrame{
 	private JButton btn_go; 
 	private JCheckBox checkBox_isJson;
 	private JCheckBox checkBox_isData;
+	int mWidth=640,mHeight=520;
+	int maxWidth=1024,maxHeight=720;
 	
 	public PostWindow(){
 		data_head = new Vector<String>();
@@ -372,6 +377,53 @@ public class PostWindow extends JFrame{
 				window.setText(jsonFormatText);
 			}
 		});
+		this.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+					setSize(mWidth, mHeight);
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setSize(maxWidth,maxHeight);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+			}
+		});
+//		this.addMouseMotionListener(new MouseMotionListener() {
+//			
+//			@Override
+//			public void mouseMoved(MouseEvent e) {
+//				System.out.println("mouseMoved");
+//				
+//			}
+//			
+//			@Override
+//			public void mouseDragged(MouseEvent e) {
+//				System.out.println("mouseDraged");
+//				
+//			}
+//		});
 		
 	}
 	
